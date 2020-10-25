@@ -2,5 +2,5 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
   <h1>User Dashboard</h1>
-  <p>Welcome to your SLMS user dashboard.</p>
+  <p>Welcome to your SLMS user dashboard.  <a href="{% url "edit" %}">Edit your profile</a> or <a href="{% url "password_change" %}">change your password</a>.</p>
 {% endblock %}
