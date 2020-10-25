@@ -199,8 +199,8 @@ ul.messages li a.close {
     float:left;
     margin:0 20px 20px 0;
 }
-.image-detail { margin-top:20px; }
-.image-info div {
+.selection-detail { margin-top:20px; }
+.selection-info div {
     padding:20px 0;
     overflow:auto;
 }
@@ -225,7 +225,7 @@ a.like, a.follow { float:right; margin-top:-8px; }
 #image-list img { width:220px; height:220px; }
 #image-list .info { padding:10px; }
 #image-list .info a { color:#333; }
-.image-likes div {
+.selection-likes div {
     float:left;
     width:auto;
     padding:10px;

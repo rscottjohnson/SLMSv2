@@ -1,0 +1,9 @@
+{% for selection in selections %}
+  <div class="selection">
+    <div class="info">
+      <a href="{{ selection.get_absolute_url }}" class="title">
+        {{ selection.lunch_type }}
+      </a>
+    </div>
+  </div>
+{% endfor %}

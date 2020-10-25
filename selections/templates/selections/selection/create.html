@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Make a selection{% endblock %}
+{% block content %}
+  <h1>Make a selection</h1>
+  <form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="Make selection!">
+  </form>
+{% endblock %}
