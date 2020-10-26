@@ -9,6 +9,7 @@ from django.views.decorators.http import require_POST
 from common.decorators import ajax_required
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from actions.utils import create_action
 
 # Create your views here.
 
@@ -23,6 +24,7 @@ def selection_create(request):
       # assign the user to the item
       new_item.user=request.user
       new_item.save()
+      create_action(request.user, 'made selection', new_item)
       messages.success(request, 'Selection added successfully')
       # redirect to new created item detail view
       return redirect(new_item.get_absolute_url())
@@ -46,6 +48,7 @@ def selection_like(request):
       selection = Selection.objects.get(id=selection_id)
       if action == 'like':
         selection.users_like.add(request.user)
+        create_action(request.user, 'likes', selection)
       else:
         selection.users_like.remove(request.user)
       return JsonResponse({'status':'ok'})
