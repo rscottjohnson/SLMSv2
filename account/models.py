@@ -8,9 +8,9 @@ from django.contrib.auth import get_user_model
 class Profile(models.Model):
   user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
   is_staff = models.BooleanField('staff status', default=False)
-  guardian_name = models.CharField(max_length=180)
-  guardian_email = models.CharField(max_length=254)
-  homeroom_teacher = models.CharField(max_length=130)
+  guardian_name = models.CharField(max_length=180, blank=True)
+  guardian_email = models.CharField(max_length=254, blank=True)
+  homeroom_teacher = models.CharField(max_length=130, blank=True)
 
   
   def __str__(self):

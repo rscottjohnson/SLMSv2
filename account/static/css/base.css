@@ -213,8 +213,8 @@ ul.messages li a.close {
 }
 a.like, a.follow { float:right; margin-top:-8px; }
 
-#image-list { overflow:auto; }
-#image-list .image {
+#selection-list { overflow:auto; }
+#selection-list .image {
     float:left;
     width:220px;
     height:300px;
@@ -222,16 +222,16 @@ a.like, a.follow { float:right; margin-top:-8px; }
     border-top:8px solid #12c064;
     background:#eee;
 }
-#image-list img { width:220px; height:220px; }
-#image-list .info { padding:10px; }
-#image-list .info a { color:#333; }
+#selection-list img { width:220px; height:220px; }
+#selection-list .info { padding:10px; }
+#selection-list .info a { color:#333; }
 .selection-likes div {
     float:left;
     width:auto;
     padding:10px;
     text-align:center;
 }
-.image-likes img {
+.selection-likes img {
     width:120px;
     height:120px;
     border-radius:50%;

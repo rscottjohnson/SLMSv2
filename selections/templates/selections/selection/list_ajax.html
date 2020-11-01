@@ -2,7 +2,7 @@
   <div class="selection">
     <div class="info">
       <a href="{{ selection.get_absolute_url }}" class="title">
-        {{ selection.lunch_type }}
+        {{ selection.user.first_name}} {{ selection.user.last_name}} selected {{ selection.lunch_type }} on {{ selection.created }}!
       </a>
     </div>
   </div>
