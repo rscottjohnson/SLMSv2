@@ -1,15 +1,18 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from .models import Selection
 from .forms import SelectionCreateForm
+from .forms import SelectionEditForm
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from common.decorators import ajax_required
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from actions.utils import create_action
+from django.views.generic.edit import UpdateView
 
 # Create your views here.
 
@@ -36,6 +39,51 @@ def selection_create(request):
 def selection_detail(request, id, slug):
   selection = get_object_or_404(Selection, id=id, slug=slug)
   return render(request, 'selections/selection/detail.html', {'section': 'selections', 'selection': selection})
+
+# def update_view(request, id):
+#   context ={}
+#   obj = get_object_or_404(Selection, id=id)
+#   form = SelectionCreateForm(request.POST or None, instance = obj)
+
+#   if form.is_valid():
+#     form.save()
+#     return HttpResponseRedirect("/"+id)
+  
+#   context["form"] = form
+
+#   return render(request, "edit.html", context)
+
+@login_required
+def selection_edit(request, pk):
+  selection = get_object_or_404(Selection, pk=pk)
+  if request.method == 'POST':
+    selection_form = SelectionCreateForm(instance=selection)
+    if selection_form.is_valid():
+      selection = selection_form.save(commit=False)
+      selection.user = request.user
+      selection.save()
+      return redirect('selection_detail', pk=selection.pk)
+      # Post a message to the user
+      # messages.success(request, 'Selection updated successfully')
+    # else:
+      # messages.error(request, 'Error updating your selection')
+  else:
+    selection_form = SelectionCreateForm(instance=selection)
+  return render(request, 'selections/selection/create.html', {'section': 'selections', 'form': selection_form})
+
+# @login_required
+# def edit(request):
+#   if request.method == 'POST':
+#     selection_form = SelectionEditForm(instance=request.selection.slug, data=request.POST)
+#     if selection_form.is_valid():
+#       selection_form.save()
+#       # Post a message to the user
+#       messages.success(request, 'Profile updated successfully')
+#     else:
+#       messages.error(request, 'Error updating your profile')
+#   else:
+#     selection_form = SelectionEditForm(instance=request)
+#   return render(request, 'selection/edit.html', {'selection_form': selection_form})
 
 @ajax_required
 @login_required

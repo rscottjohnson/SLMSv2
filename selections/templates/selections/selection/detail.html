@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ selection.lunch_type }}{% endblock %}
 {% block content %}
-  <h1>{{ selection.lunch_type }}</h1>
-  {% with total_likes=selection.users_like.count users_like=selection.users_like.all %}
-    <div class="selection-info">
+<h1>{{ selection.lunch_type }}</h1>
+{% with total_likes=selection.users_like.count users_like=selection.users_like.all %}
+<div class="selection-info">
+  <a class="btn btn-default" href="{% url 'selection_edit' pk=selection.pk %}"><span class="glyphicon glyphicon-pencil">Edit</span></a>
       <div>
         <span class="count">
           <span class="total">{{ total_likes }}</span>
