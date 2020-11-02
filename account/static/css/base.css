@@ -275,3 +275,17 @@ img.user-detail {
     font-style:italic;
     color:#ccc;
 }
+
+/* counts */
+.date {
+    color:#ccc;
+    font-family: georgia, serif;
+    font-size: 12px;
+    font-style: italic; 
+}
+
+/* pagination */
+.pagination { 
+    margin:40px 0; 
+    font-weight:bold;
+}
