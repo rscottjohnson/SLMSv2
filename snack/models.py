@@ -43,7 +43,7 @@ class Count(models.Model):
   published = PublishedManager() # custom manager
 
   def get_absolute_url(self):
-    return reverse('count:count_detail', args=[self.publish.year, self.publish.month, self.publish.day, self.slug])
+    return reverse('snack:count_detail', args=[self.publish.year, self.publish.month, self.publish.day, self.slug])
 
 # Model for Snack Foods
 class Food(models.Model):

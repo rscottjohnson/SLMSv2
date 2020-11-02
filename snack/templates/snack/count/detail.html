@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ count.title }}{% endblock %}
+{% block content %}
+  <h1>{{ count.title }}</h1>
+  <p class="date">
+    Published {{ count.publish }} by {{ count.author }}
+  </p>
+  {{ count.body|linebreaks }}
+{% endblock %}

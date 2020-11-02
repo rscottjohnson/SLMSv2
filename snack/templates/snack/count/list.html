@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Snack Counts{% endblock %}
+{% block content %}
+  <h1>Snack Counts</h1>
+  {% for count in counts %}
+    <h2>
+      <a href="{{ count.get_absolute_url }}">
+        {{ count.title }}
+      </a>
+    </h2>
+    <p class="date">
+      Published {{ count.publish }} by {{ count.author }}
+    </p>
+    {{ count.body|truncatewords:30|linebreaks }}
+  {% endfor %}
+  {% include "pagination.html" with page=counts %}
+{% endblock %}
