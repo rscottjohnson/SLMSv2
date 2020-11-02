@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'selections.apps.SelectionsConfig',
-    'actions.apps.ActionsConfig'
+    'actions.apps.ActionsConfig',
+    'snack.apps.SnackConfig'
 ]
 
 MIDDLEWARE = [
