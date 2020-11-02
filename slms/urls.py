@@ -23,7 +23,7 @@ urlpatterns = [
     path('', include('account.urls')),
     path('account/', include('account.urls')),
     path('selections/', include('selections.urls', namespace='selections')),
-    # path('snack/', include('snack.urls', namespace='snack')),
+    path('snack/', include('snack.urls', namespace='snack')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

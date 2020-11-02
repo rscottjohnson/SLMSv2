@@ -3,6 +3,7 @@ from django.db.models.fields import IntegerField
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.urls import reverse
 
 # Create your models here.
 
@@ -40,6 +41,9 @@ class Count(models.Model):
 
   objects = models.Manager() # the default manager
   published = PublishedManager() # custom manager
+
+  def get_absolute_url(self):
+    return reverse('count:count_detail', args=[self.publish.year, self.publish.month, self.publish.day, self.slug])
 
 # Model for Snack Foods
 class Food(models.Model):
