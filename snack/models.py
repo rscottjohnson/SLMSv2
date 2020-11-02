@@ -6,6 +6,12 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 
+# Custom manager
+class PublishedManager(models.Manager):
+  def get_queryset(self):
+    return super(PublishedManager, self).get_queryset().filter(status='published')
+
+# Model for Snack Counts
 class Count(models.Model):
   STATUS_CHOICES = (
     ('draft', 'Draft'),
@@ -32,6 +38,10 @@ class Count(models.Model):
   def __str__(self):
     return self.title
 
+  objects = models.Manager() # the default manager
+  published = PublishedManager() # custom manager
+
+# Model for Snack Foods
 class Food(models.Model):
   CATEGORY_CHOICES = (
     ('bars', 'Bars'),
@@ -52,3 +62,5 @@ class Food(models.Model):
   # default representation
   def __str__(self):
     return self.description
+
+  
