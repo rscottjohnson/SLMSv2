@@ -1,4 +1,4 @@
-from snack.views import CountListView
+from snack.views import CountListView, food_create
 from django.urls import path
 from . import views
 
@@ -13,6 +13,8 @@ urlpatterns = [
   path('<int:year>/<int:month>/<int:day>/<slug:count>/', views.count_detail, name='count_detail'),
   path('list/', views.food_list, name='food_list'),
   path('list/<int:id>/', views.food_detail, name='food_detail'),
+  path('list/create/', views.food_create, name='food_create'),
+  path('list/<int:id>/edit', views.food_edit, name='food_edit'),
 ]
 
 # app_name = 'food'

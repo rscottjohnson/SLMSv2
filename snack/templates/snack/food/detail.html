@@ -7,4 +7,5 @@
   </p>
   <p>Category: {{ food.category}}</p>
   <p>Inventory: {{ food.inventory }}</p>
+  <p><a href="{% url 'snack:food_edit' id=food.id %}">Edit</a></p>
 {% endblock %}

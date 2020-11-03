@@ -3,6 +3,7 @@
 <html>
   <head>
     <title>{% block title %}{% endblock %}</title>
+    
     <link href="{% static "css/base.css" %}" rel="stylesheet">
   </head>
   <body>
@@ -10,9 +11,15 @@
       <span class="logo">SLMS</span>
       {% if request.user.is_authenticated %}
         <ul class="menu">
-          <li {% if section == "dashboard" %} class="selected" {% endif %}>
-            <a href="{% url "dashboard" %}">Dashboard</a>
-          </li>
+          {% if request.user.is_staff %}
+            <li {% if section == "dashboard" %} class="selected" {% endif %}>
+              <a href="{% url "dashboard" %}">User Dashboard</a>
+            </li>
+          {% else %}
+            <li {% if section == "dashboard" %} class="selected" {% endif %}>
+              <a href="{% url "dashboard" %}">Dashboard</a>
+            </li>
+          {% endif %}
           <li {% if section == "selections" %} class="selected" {% endif %}>
             <a href="{% url "selections:list" %}">Selections</a>
           </li>
@@ -21,7 +28,7 @@
           </li>
           {% if request.user.is_staff %}
             <li {% if section == "counts" %} class="selected" {% endif %}>
-              <a href="{% url 'snack:count_list' %}">Snacks</a>
+              <a href="{% url 'snack:count_list' %}">Snack Dashboard</a>
             </li>
           {% endif %}
         </ul>
