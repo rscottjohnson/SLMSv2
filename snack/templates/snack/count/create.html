@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Create Snack Count{% endblock %}
+{% block content %}
+  <h1>Create a Snack Count</h1>
+  <form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="Create count!">
+  </form>
+{% endblock %}
