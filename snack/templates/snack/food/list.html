@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Snack Foods{% endblock %}
+{% block content %}
+  <h1>Snack Food Dashboard</h1>
+  <p>Welcome to your SLMS snack food dashboard.</p>
+  <!-- <p>You can also <a href="{% url 'snack:count_create' %}">create a new snack count</a>.</p> -->
+  <h2>Snack Foods</h2>
+  {% for food in foods %}  
+    <!-- <div>
+      <h2><a href="">{{ food.description }}</a></h2>
+    </div> -->
+    <h2>
+      <a href="{{ food.get_absolute_url }}">
+        {{ food.description }}
+      </a>
+    </h2>
+    <p class="date">
+      Created {{ food.created }}
+    </p>
+  {% endfor %}
+  <!-- {% include "pagination.html" with page=page_obj %} -->
+{% endblock %}

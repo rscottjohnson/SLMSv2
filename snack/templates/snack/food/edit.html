@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Edit Snack Food{% endblock %}
+{% block content %}
+  <h1>Edit Snack Food</h1>
+  <p>Enter the new values for the food below.</p>
+  <form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="Edit food!">
+  </form>
+{% endblock %}

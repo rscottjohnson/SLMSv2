@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Count
+from .models import Count, Food
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
@@ -84,3 +84,11 @@ def count_edit(request, pk):
     form = CountEditForm(instance=count)
     # profile_form = ProfileEditForm(instance=request.user.profile)
   return render(request, 'snack/count/edit.html', {'form': form})
+
+def food_list(request):
+  foods = Food.objects.all().order_by('description')
+  return render(request, 'snack/food/list.html', {'foods': foods})
+
+def food_detail(request, id):
+  food = get_object_or_404(Food, id=id)
+  return render(request, 'snack/food/detail.html', {'food': food})
