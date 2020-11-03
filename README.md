@@ -1,5 +1,17 @@
 # School Lunch Management System - SLMS
 *The School Lunch Management System (SLMS)* is a web application that intends to help elementary schools efficiently participate in their county's school lunch program.
+
+- [School Lunch Management System - SLMS](#school-lunch-management-system---slms)
+  - [Goals and Overview](#goals-and-overview)
+  - [Navigation and Use](#navigation-and-use)
+    - [New User Registration and Log in](#new-user-registration-and-log-in)
+    - [User Dashboard](#user-dashboard)
+    - [Lunch Selections](#lunch-selections)
+    - [People](#people)
+    - [Snack Dashboard](#snack-dashboard)
+    - [Log out](#log-out)
+  - [Configuration:](#configuration)
+
 ## Goals and Overview
 * The elementary school requires their students to choose a lunch type for each day that they are attending:
   * *hot lunch* (served by the cafeteria)
