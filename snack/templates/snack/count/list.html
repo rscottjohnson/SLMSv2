@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Snack Counts{% endblock %}
 {% block content %}
-  <h1>Snack Counts</h1>
+  <h1>Snack Count Dashboard</h1>
+  <p>Welcome to your SLMS snack count dashboard.</p>
+  <p>You can also <a href="{% url 'snack:count_create' %}">create a new snack count</a> or <a href="{% url 'snack:food_list' %}">view available snack foods</a>.</p>
+  <!-- <a class="btn btn-success" href="{% url 'snack:count_create' %}" role="button">New Snack Count</a> -->
+  <!-- <a class="btn btn-success" href="{% url 'snack:food_list' %}" role="button">View Snack Foods</a> -->
+  <h2>Snack Counts:</h2>
   {% for count in counts %}
     <h2>
       <a href="{{ count.get_absolute_url }}">

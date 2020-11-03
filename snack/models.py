@@ -66,5 +66,8 @@ class Food(models.Model):
   # default representation
   def __str__(self):
     return self.description
+  
+  def get_absolute_url(self):
+    return reverse('snack:food_detail', args=[self.pk])
 
   

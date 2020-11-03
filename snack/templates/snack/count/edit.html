@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Edit Snack Count{% endblock %}
+{% block content %}
+  <h1>Edit Snack Count</h1>
+  <p>Enter the new values for the count below.</p>
+  <form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="Edit count!">
+  </form>
+{% endblock %}

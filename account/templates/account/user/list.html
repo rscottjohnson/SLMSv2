@@ -6,9 +6,9 @@
     {% for user in users %}
       <div class="user">
         <div class="info">
-          <a href="{{ user.get_absolute_url }}" class="title">
+          <p><a href="{{ user.get_absolute_url }}" class="title">
             {{ user.get_full_name }}
-          </a>
+          </a></p>
         </div>
       </div>
       {% endfor %}

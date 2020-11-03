@@ -5,5 +5,7 @@
   <p class="date">
     Published {{ count.publish }} by {{ count.author }}
   </p>
+  <p><a href="{% url 'snack:count_edit' pk=count.pk %}">Edit</a></p>
+  {{ count.food}} = {{ count.quantity }}
   {{ count.body|linebreaks }}
 {% endblock %}
