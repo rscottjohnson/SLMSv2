@@ -45,11 +45,9 @@ def count_create(request):
       cd = form.cleaned_data
       new_item = form.save(commit=False)
       # assign the user to the item
-      # new_item.user=request.user
       new_item.author=request.user
       new_item.slug=slugify(new_item.title)
       new_item.save()
-      # create_action(request.user, 'made selection', new_item)
       messages.success(request, 'Selection added successfully')
       # redirect to new created item detail view
       return redirect(new_item.get_absolute_url())
@@ -59,30 +57,22 @@ def count_create(request):
   return render(request, 'snack/count/create.html', {'section': 'count', 'form': form})
 
 @login_required
-# def count_edit(request, year, month, day, count):
 def count_edit(request, pk):
-  # count = get_object_or_404(Count, slug=count, status='published', publish__year=year, publish__month=month, publish__day=day)
   count = get_object_or_404(Count, pk=pk)
   if request.method == 'POST':
     form = CountEditForm(request.POST, instance=count)
-    # form = CountEditForm(instance=count, data=request.POST)
-    # profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
     if form.is_valid():
       form.save(commit=False)
       count.author=request.user
       count.publish = timezone.now()
       count.save()
-      # profile_form.save()
       # Post a message to the user
       messages.success(request, 'Count updated successfully')
-      # return redirect('count_detail', pk=count.pk)
       return redirect(count.get_absolute_url())
     else:
       messages.error(request, 'Error updating count')
   else:
-    # form = CountEditForm(instance=request.user)
     form = CountEditForm(instance=count)
-    # profile_form = ProfileEditForm(instance=request.user.profile)
   return render(request, 'snack/count/edit.html', {'form': form})
 
 def food_list(request):
@@ -94,30 +84,21 @@ def food_detail(request, id):
   return render(request, 'snack/food/detail.html', {'food': food})
 
 @login_required
-# def count_edit(request, year, month, day, count):
 def food_edit(request, id):
-  # count = get_object_or_404(Count, slug=count, status='published', publish__year=year, publish__month=month, publish__day=day)
   food = get_object_or_404(Food, id=id)
   if request.method == 'POST':
     form = FoodEditForm(request.POST, instance=food)
-    # form = CountEditForm(instance=count, data=request.POST)
-    # profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
     if form.is_valid():
       form.save(commit=False)
-      # food.author=request.user
       food.created = timezone.now()
       food.save()
-      # profile_form.save()
       # Post a message to the user
       messages.success(request, 'Food updated successfully')
-      # return redirect('count_detail', pk=count.pk)
       return redirect(food.get_absolute_url())
     else:
       messages.error(request, 'Error updating food')
   else:
-    # form = CountEditForm(instance=request.user)
     form = FoodEditForm(instance=food)
-    # profile_form = ProfileEditForm(instance=request.user.profile)
   return render(request, 'snack/food/edit.html', {'form': form})
 
 @login_required
@@ -128,12 +109,7 @@ def food_create(request):
     if form.is_valid():
       cd = form.cleaned_data
       new_item = form.save(commit=False)
-      # assign the user to the item
-      # new_item.user=request.user
-      # new_item.author=request.user
-      # new_item.slug=slugify(new_item.title)
       new_item.save()
-      # create_action(request.user, 'made selection', new_item)
       messages.success(request, 'Food added successfully')
       # redirect to new created item detail view
       return redirect(new_item.get_absolute_url())
@@ -141,3 +117,4 @@ def food_create(request):
     # build form with data provided via GET
     form = FoodCreateForm(data=request.GET)
   return render(request, 'snack/food/create.html', {'section': 'food', 'form': form})
+  
