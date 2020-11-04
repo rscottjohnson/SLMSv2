@@ -2,6 +2,9 @@
 {% block title %}Selections made{% endblock %}
 {% block content %}
   <h1>Selections made</h1>
+  <p>Welcome to the view of recent lunch selections.  Click on a selection below to see it's details.</p>
+  <p>You can also <a href="{% url 'selections:create' %}">create a new lunch selection.</p>
+  <hr>
   <div id="selection-list">
       {% include "selections/selection/list_ajax.html" %}
   </div>
