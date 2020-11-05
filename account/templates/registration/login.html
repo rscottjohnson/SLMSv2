@@ -5,7 +5,7 @@
   {% if form.errors %}
   <p> Your username / password are incorrect or do not match</p>
   {% else %}
-  <p>Please use the log-in form below to log-in to SLMS.  Don't yet have an account? <a href="{% url "register" %}">Register here</a>.</p>
+  <p>Please use the log-in form below to log-in to SLMS.  Don't yet have an account? <a name="register-link" href="{% url "register" %}">Register here</a>.</p>
   {% endif %}
   <div class="login-form">
     <form action="{% url 'login' %}" method="post">
@@ -15,7 +15,7 @@
       {% csrf_token %}
       <!-- pass the hidden 'next' variable to redirect upon success -->
       <input type="hidden" name="next" value="{{ next }}" />
-      <p><input type="submit" value="Log-in"</p>
+      <p><input type="submit" name="log-in-button" value="Log-in"</p>
     </form>
   </div>
   {% endblock %}
