@@ -57,8 +57,25 @@ class SelectionTest(unittest.TestCase):
     # The content of the new selection is now included
     self.assertTrue(Selection.objects.all().filter(content='test_selection_create content').exists())
   
-    # def test_selection_detail(self):
+  # def test_selection_detail(self):
   
-    # def test_selection_like(self):
-  
-    # def test_selection_list(self):
+  # def test_selection_like(self):
+      
+  def test_selection_list(self):
+    # Test user credentials
+    TEST_USERNAME = 'safariuser'
+    TEST_PASSWORD = 'safaripassword'
+
+    # Get the view
+    self.browser.get('http://127.0.0.1:8000/selections/')
+    
+    # Pass in the credentials
+    self.browser.find_element_by_name('username').send_keys(TEST_USERNAME)
+    self.browser.find_element_by_name('password').send_keys(TEST_PASSWORD)
+    self.browser.find_element_by_name('password').send_keys(Keys.ENTER)
+
+    # Wait for the url to change
+    WebDriverWait(self.browser, 10).until(EC.url_matches('http://127.0.0.1:8000/selections/'))
+    
+    # The page title has changed
+    self.assertIn('Selections made', self.browser.title)

@@ -1566,3 +1566,22 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1604630720907	Marionette	WARN	TLS certificate errors will be ignored for this session
 1604630721984	Marionette	INFO	Stopped listening on port 63309
 JavaScript error: resource://gre/modules/UrlClassifierListManager.jsm, line 691: TypeError: this.tablesData[table] is undefined
+1604631458438	geckodriver	INFO	Listening on 127.0.0.1:65164
+1604631459458	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/z7/bn9k57ws6lq3822516vgyp200000gn/T/rust_mozprofile9W4a6Q"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1604631462136	Marionette	INFO	Listening on port 65194
+1604631462245	Marionette	WARN	TLS certificate errors will be ignored for this session
+1604631464863	Marionette	INFO	Stopped listening on port 65194
+1604631465520	geckodriver	INFO	Listening on 127.0.0.1:65359
+1604631466136	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/z7/bn9k57ws6lq3822516vgyp200000gn/T/rust_mozprofilep9Is6K"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1604631468474	Marionette	INFO	Listening on port 65399
+1604631468547	Marionette	WARN	TLS certificate errors will be ignored for this session
+1604631469644	Marionette	INFO	Stopped listening on port 65399
+1604631470206	geckodriver	INFO	Listening on 127.0.0.1:65452
+1604631471234	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/z7/bn9k57ws6lq3822516vgyp200000gn/T/rust_mozprofile5UPeT7"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1604631473577	Marionette	INFO	Listening on port 65470
+1604631473627	Marionette	WARN	TLS certificate errors will be ignored for this session
+1604631474786	Marionette	INFO	Stopped listening on port 65470
+JavaScript error: resource://gre/modules/UrlClassifierListManager.jsm, line 691: TypeError: this.tablesData[table] is undefined
