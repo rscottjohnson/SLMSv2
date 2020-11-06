@@ -23,7 +23,8 @@ class NewVisitorTest(unittest.TestCase):
     TEST_PASSWORD = 'testuser2password'
 
     # User visits SLMS register page
-    self.browser.get('http://localhost:8000/account/register/')
+    # self.browser.get('http://localhost:8000/account/register/')
+    self.browser.get('http://127.0.0.1:8000/account/register/')
 
     # The page title is 'Create account'
     self.assertIn('Create account', self.browser.title)
@@ -36,7 +37,8 @@ class NewVisitorTest(unittest.TestCase):
     self.browser.find_element_by_name('create-account-button').send_keys(Keys.ENTER)  
 
     # User visits SLMS homepage
-    self.browser.get('http://localhost:8000')
+    # self.browser.get('http://localhost:8000')
+    self.browser.get('http://127.0.0.1:8000')
     
     # The page title is now 'Log-in'
     self.assertIn('Log-in', self.browser.title)
@@ -49,7 +51,8 @@ class NewVisitorTest(unittest.TestCase):
     self.browser.find_element_by_name('log-out-link').send_keys(Keys.ENTER)
 
     # User is taken to the Logged Out page
-    self.browser.get('http://localhost:8000/account/logout/')
+    # self.browser.get('http://localhost:8000/account/logout/')
+    self.browser.get('http://127.0.0.1:8000/account/logout/')
 
     # The page title is now 'Logged Out'
     self.assertIn('Logged Out', self.browser.title)
