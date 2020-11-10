@@ -3,6 +3,7 @@
 {% block content %}
   <h1>Snack Food Dashboard</h1>
   <p>Welcome to your SLMS snack food dashboard.  Click on a food below to view its details.</p>
+  <p>You can also <a href="{% url 'snack:food_create' %}">create a new snack food</a>.</p>
   <h2>Snack Foods:</h2>
   {% for food in foods %}  
     <h3>
