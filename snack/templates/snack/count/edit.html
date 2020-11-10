@@ -6,6 +6,6 @@
   <form method="post">
     {{ form.as_p }}
     {% csrf_token %}
-    <input type="submit" value="Edit count!">
+    <input type="submit" name="edit-count-button" value="Edit count!">
   </form>
 {% endblock %}

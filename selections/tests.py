@@ -59,4 +59,4 @@ class SelectionTest(unittest.TestCase):
     self.browser.get('http://127.0.0.1:8000/selections/create/')
     # The page title remains at the log-in page
     self.assertIn('Log-in', self.browser.title)
-    
+   
