@@ -7,8 +7,8 @@ import string
 
 # Organize tests here
 
-# OVERVIEW: SnackFoodTest is an object for testing the snack app of slms.
-# The SnackFoodTest test cases align with Test Scenario 2.
+# OVERVIEW: TestLunchSelection is an object for testing the snack app of slms.
+# The TestLunchSelection test cases align with Test Scenario 2.
 class TestLunchSelection(TestCase):
 
   def setUp(self):
@@ -45,10 +45,10 @@ class TestLunchSelection(TestCase):
     self.assertRedirects(response, "/account/login/?next=/selections/create/")
 
   # TC_5
-  def test_authenticated_non_staff_user_cannot_access_create_selection(self):
+  def test_authenticated_non_staff_user_can_access_create_selection(self):
     self.client.force_login(user=self.non_staff_user)
     response = self.client.get(reverse("selections:create"))
-    self.assertNotEqual(response.status_code, 200)
+    self.assertEqual(response.status_code, 200)
 
   # TC_6
   def test_authenticated_staff_user_can_access_create_selection(self):

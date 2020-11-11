@@ -1,117 +1,140 @@
-from django.test import client
-from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
 from django.contrib.auth.models import User
+from .models import Profile
+from django.test import TestCase
+from django.urls import reverse
+import random
+import string
 
-import unittest
+# Organize tests here
 
-# Organize tests into classes (which inherit from unittest.TestCase) here
-
-# OVERVIEW: AccountTest is an object for testing the account app of slms.
-# The AccountTest test test cases align with Test Scenario 1.
-class AccountTest(unittest.TestCase):
+# OVERVIEW: TestAccount is an object for testing the snack app of slms.
+# The TestAccount test cases align with Test Scenario 1.
+class TestAccount(TestCase):
 
   def setUp(self):
-    self.browser = webdriver.Firefox()
+    st_user = User.objects.create_superuser('staff_user', 'staffuser@example.com', 'staffuserpassword')
+    st_user_with_profile = Profile.objects.create(user=st_user)
+    nost_user = User.objects.create_user('non_staff_user', 'nonstaffuser@example.com', 'nonstaffuserpassword')
+    nost_user_with_profile = Profile.objects.create(user=nost_user)
+    self.staff_user = User.objects.all().filter(is_staff=1).last()
+    self.non_staff_user = User.objects.all().filter(is_staff=0).last()
 
   def tearDown(self):
-    self.browser.quit()
-    # Delete TC_1 user
-    tc1_user = User.objects.filter(email='chromeuser@example.com')
-    tc1_user.delete()
+    self.staff_user.delete()
+
+  # User Dashboard access
 
   # TC_1
-  def test_register_new_user_with_valid_inputs(self):
-    # MODIFIES: User model
-    # EFFECTS: Adds a new user to the User table when given valid inputs
-
-    # Test data
-    TEST_USERNAME = 'chromeuser'
-    TEST_FIRST_NAME = 'Chrome'
-    TEST_EMAIL = 'chromeuser@example.com'
-    TEST_PASSWORD = 'chromeuserpassword'
-    # User visits SLMS register page
-    self.browser.get('http://127.0.0.1:8000/account/register/')
-    # The page title is 'Create account'
-    self.assertIn('Create account', self.browser.title)
-    # Pass in the user credentials
-    self.browser.find_element_by_name('username').send_keys(TEST_USERNAME)
-    self.browser.find_element_by_name('first_name').send_keys(TEST_FIRST_NAME)
-    self.browser.find_element_by_name('email').send_keys(TEST_EMAIL)
-    self.browser.find_element_by_name('password').send_keys(TEST_PASSWORD)
-    self.browser.find_element_by_name('password2').send_keys(TEST_PASSWORD)
-    self.browser.find_element_by_name('create-account-button').send_keys(Keys.ENTER)
-
-    WebDriverWait(self.browser, 10).until(EC.url_matches('http://127.0.0.1:8000/account/register/'))
-    # Account now exists
-    self.assertTrue(User(username=TEST_USERNAME))
+  def test_anonymous_user_cannot_access_user_dashboard(self):
+    response = self.client.get(reverse("dashboard"))
+    self.assertRedirects(response, "/account/login/?next=/account/")
 
   # TC_2
-  def test_register_new_user_with_invalid_inputs(self):
-    # EFFECTS: Messages to the user pointing out invalid inputs
-
-    # Test data
-    TEST_USERNAME = 'firefoxuser'
-    TEST_FIRST_NAME = ''
-    TEST_EMAIL = 'firefoxuser@example.com'
-    TEST_PASSWORD = ''
-    # User visits SLMS register page
-    self.browser.get('http://127.0.0.1:8000/account/register/')
-    # The page title is 'Create account'
-    self.assertIn('Create account', self.browser.title)
-    # Pass in the user credentials
-    self.browser.find_element_by_name('username').send_keys(TEST_USERNAME)
-    self.browser.find_element_by_name('first_name').send_keys(TEST_FIRST_NAME)
-    self.browser.find_element_by_name('email').send_keys(TEST_EMAIL)
-    self.browser.find_element_by_name('password').send_keys(TEST_PASSWORD)
-    self.browser.find_element_by_name('password2').send_keys(TEST_PASSWORD)
-    self.browser.find_element_by_name('create-account-button').send_keys(Keys.ENTER)
-    # Remain on 'Create account' page
-    self.assertIn('Create account', self.browser.title)
-    # Account not created
-    self.assertFalse(User.objects.filter(username=TEST_USERNAME))
+  def test_authenticated_non_staff_user_can_access_user_dashboard(self):
+    self.client.force_login(user=self.non_staff_user)
+    response = self.client.get(reverse("dashboard"))
+    self.assertEqual(response.status_code, 200)
 
   # TC_3
-  def test_login_user_with_valid_inputs(self):
-    # EFFECTS: Redirects logged in user to the User Dashboard
+  def test_authenticated_staff_user_can_access_user_dashboard(self):
+    self.client.force_login(user=self.staff_user)
+    response = self.client.get(reverse("dashboard"))
+    self.assertEqual(response.status_code, 200)
 
-    # Test data
-    TEST_USERNAME = 'safariuser'
-    TEST_PASSWORD = 'safaripassword'
-    # User visits SLMS register page
-    self.browser.get('http://127.0.0.1:8000/')
-    # The page title is 'Log-in'
-    self.assertIn('Log-in', self.browser.title)
-    # Pass in the user credentials
-    self.browser.find_element_by_name('username').send_keys(TEST_USERNAME)
-    self.browser.find_element_by_name('password').send_keys(TEST_PASSWORD)
-    self.browser.find_element_by_name('log-in-button').send_keys(Keys.ENTER)
-    # User logs out
-    self.browser.find_element_by_name('log-out-link').send_keys(Keys.ENTER)
-    # User is taken to the Logged Out page
-    self.browser.get('http://127.0.0.1:8000/account/logout/')
-    # The page title is now 'Logged Out'
-    self.assertIn('Logged Out', self.browser.title)
+  # User Profile access
 
   # TC_4
-  def test_login_user_with_invalid_inputs(self):
-    # EFFECTS: Redirects logged in user to the User Dashboard
+  def test_anonymous_user_cannot_access_user_profile(self):
+    response = self.client.get(reverse("edit"))
+    self.assertRedirects(response, "/account/login/?next=/account/edit/")
 
-    # Test data
-    TEST_USERNAME = 'safariuser'
-    TEST_PASSWORD = ''
-    # User visits SLMS register page
-    self.browser.get('http://127.0.0.1:8000/')
-    # The page title is 'Log-in'
-    self.assertIn('Log-in', self.browser.title)
-    # Pass in the user credentials
-    self.browser.find_element_by_name('username').send_keys(TEST_USERNAME)
-    self.browser.find_element_by_name('password').send_keys(TEST_PASSWORD)
-    self.browser.find_element_by_name('log-in-button').send_keys(Keys.ENTER)
-    # The page title is still 'Log-in'
-    self.assertIn('Log-in', self.browser.title)
-          
-if __name__ == '__main__':
-  unittest.main(warnings='ignore')
+  # TC_5
+  def test_authenticated_non_staff_user_can_access_user_profile(self):
+    self.client.force_login(user=self.non_staff_user)
+    response = self.client.get(reverse("edit"))
+    self.assertEqual(response.status_code, 200)
+
+  # TC_6
+  def test_authenticated_staff_user_can_access_user_profile(self):
+    self.client.force_login(user=self.staff_user)
+    response = self.client.get(reverse("edit"))
+    self.assertEqual(response.status_code, 200)
+
+  # Edit user profile
+  
+  # TC_7  
+  def test_authenticated_non_staff_user_can_edit_user_profile_with_valid_inputs(self):
+    self.client.force_login(user=self.non_staff_user)
+    letters = string.ascii_lowercase
+    response = self.client.post('/account/edit/', {'guardian_name': ''.join(random.choice(letters) for i in range(15)), 'guardian_email': ''.join(random.choice(letters) for i in range(5)) + '@example.com'})
+    self.assertContains(response, '<li class="success">')
+  
+  # TC_8
+  def test_authenticated_non_staff_user_cannot_edit_user_profile_with_invalid_inputs(self):
+    self.client.force_login(user=self.non_staff_user)
+    response = self.client.post('/account/edit/', {'guardian_name': 'a' * 181})
+    self.assertContains(response, '<li class="error">')
+
+  # User password access
+
+  # TC_9 
+  def test_anonymous_user_cannot_access_change_password(self):
+    response = self.client.get(reverse("password_change"))
+    self.assertRedirects(response, "/account/login/?next=/account/password_change/")
+
+  # TC_10
+  def test_authenticated_non_staff_user_can_access_change_password(self):
+    self.client.force_login(user=self.non_staff_user)
+    response = self.client.get(reverse("password_change"))
+    self.assertEqual(response.status_code, 200)
+
+  # TC_11
+  def test_authenticated_staff_user_can_access_change_password(self):
+    self.client.force_login(user=self.staff_user)
+    response = self.client.get(reverse("password_change"))
+    self.assertEqual(response.status_code, 200)
+
+  # User list access
+
+  # TC_12 
+  def test_anonymous_user_cannot_access_user_list(self):
+    response = self.client.get(reverse("user_list"))
+    self.assertRedirects(response, "/account/login/?next=/account/users/")
+
+  # TC_13
+  def test_authenticated_non_staff_user_can_access_access_user_list(self):
+    self.client.force_login(user=self.non_staff_user)
+    response = self.client.get(reverse("user_list"))
+    self.assertEqual(response.status_code, 200)
+
+  # TC_14
+  def test_authenticated_staff_user_can_access_access_user_list(self):
+    self.client.force_login(user=self.staff_user)
+    response = self.client.get(reverse("user_list"))
+    self.assertEqual(response.status_code, 200)
+  
+  # User detail access
+
+  # TC_15
+  def test_authenticated_non_staff_user_can_access_access_user_detail(self):
+    self.client.force_login(user=self.non_staff_user)
+    response = self.client.get(reverse("user_detail", args=[self.non_staff_user]))
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, '<div class="profile-info">')
+
+  # Register account
+
+  # TC_16
+  def test_new_user_registration_with_valid_inputs(self):
+    response = self.client.get(reverse("register"))
+    self.assertEqual(response.status_code, 200)
+    letters = string.ascii_lowercase
+    response = self.client.post('/account/register/', {'username': ''.join(random.choice(letters) for i in range(6)), 'first_name': ''.join(random.choice(letters) for i in range(6)), 'email': ''.join(random.choice(letters) for i in range(6)) + '@example.com', 'password': 'password', 'password2': 'password'})
+    self.assertContains(response, '<h1>Welcome')
+
+  # TC_17
+  def test_new_user_registration_with_invalid_inputs(self):
+    response = self.client.get(reverse("register"))
+    self.assertEqual(response.status_code, 200)
+    response = self.client.post('/account/register/', {'username': '', 'first_name': '', 'email': '', 'password': '', 'password2': ''})
+    self.assertContains(response, '<h1>Create an account</h1>')
