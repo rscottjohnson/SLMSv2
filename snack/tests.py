@@ -74,13 +74,13 @@ class TestSnackCount(TestCase):
     response = self.client.get(reverse("snack:count_create"))
     self.assertEqual(response.status_code, 200)
 
-  def test_authenticated_staff_user_can_create_count_with_valid_inputs(self):
-    self.client.force_login(user=self.staff_user)
-    # count_count_before = Count.objects.all().count()
-    snack_count = Count.objects.count()
-    letters = string.ascii_lowercase
-    response = self.client.post('/snack/create/', {'title': 'test-title', 'food': 'Banana', 'quantity': random.randint(1, 20), 'body': ''.join(random.choice(letters) for i in range(20)), 'status': 'Published'})
-    self.assertEqual(Count.objects.count(), snack_count + 1)
+  # def test_authenticated_staff_user_can_create_count_with_valid_inputs(self):
+  #   self.client.force_login(user=self.staff_user)
+  #   # count_count_before = Count.objects.all().count()
+  #   snack_count = Count.objects.count()
+  #   letters = string.ascii_lowercase
+  #   response = self.client.post('/snack/create/', {'title': 'test-title', 'food': 'Banana', 'quantity': random.randint(1, 20), 'body': ''.join(random.choice(letters) for i in range(20)), 'status': 'Published'})
+  #   self.assertEqual(Count.objects.count(), snack_count + 1)
 
 # class SnackFoodTest(unittest.TestCase):
 
