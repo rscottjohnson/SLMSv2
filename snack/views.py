@@ -10,6 +10,7 @@ from django.utils import timezone
 
 # Create your views here.
 
+@login_required
 def count_list(request):
   object_list = Count.published.all()
   # Instantiate a Paginator class with number of objects to display on each page
@@ -75,10 +76,12 @@ def count_edit(request, pk):
     form = CountEditForm(instance=count)
   return render(request, 'snack/count/edit.html', {'form': form})
 
+@login_required
 def food_list(request):
   foods = Food.objects.all().order_by('description')
   return render(request, 'snack/food/list.html', {'foods': foods})
 
+@login_required
 def food_detail(request, id):
   food = get_object_or_404(Food, id=id)
   return render(request, 'snack/food/detail.html', {'food': food})

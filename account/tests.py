@@ -148,6 +148,8 @@ class TestAccount(TestCase):
     nost_user_with_profile = Profile.objects.create(user=nost_user)
     self.staff_user = User.objects.all().filter(is_staff=1).last()
     self.non_staff_user = User.objects.all().filter(is_staff=0).last()
+    self.non_staff_user_valid_credentials = {'username': 'non_staff_user', 'password': 'nonstaffuserpassword'}
+    self.non_staff_user_invalid_credentials = {'username': 'non_staff_user', 'password': ''}
 
   def tearDown(self):
     self.staff_user.delete()
@@ -168,3 +170,19 @@ class TestAccount(TestCase):
     self.assertEqual(response.status_code, 200)
     response = self.client.post('/account/register/', {'username': '', 'first_name': '', 'email': '', 'password': '', 'password2': ''})
     self.assertContains(response, '<h1>Create an account</h1>')
+
+  # Log-in to account
+
+  # TC_3
+  def test_user_login_success_with_valid_credentials(self):
+    response = self.client.post('/account/login/', self.non_staff_user_valid_credentials, follow=True)
+    self.assertTrue(response.context['user'].is_active)
+    self.assertContains(response, '<h1>User Dashboard</h1>')
+
+  # TC_4
+  def test_user_login_failure_with_invalid_credentials(self):
+    response = self.client.post('/account/login/', self.non_staff_user_invalid_credentials, follow=True)
+    self.assertFalse(response.context['user'].is_active)
+    
+
+  
