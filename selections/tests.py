@@ -8,7 +8,7 @@ import string
 # Organize tests here
 
 # OVERVIEW: TestLunchSelection is an object for testing the snack app of slms.
-# The TestLunchSelection test cases align with Test Scenario 2.
+# The TestLunchSelection test cases align with Test Scenario 4.
 class TestLunchSelection(TestCase):
 
   def setUp(self):
