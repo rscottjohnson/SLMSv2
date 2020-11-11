@@ -1,8 +1,15 @@
 # School Lunch Management System - SLMS
 *The School Lunch Management System (SLMS)* is a web application that intends to help elementary schools efficiently participate in their county's school lunch program.
 
+This web application is written in Python and utilizes the Django framework.  See the *Getting Started* section for information how to run the application locally.
+
 - [School Lunch Management System - SLMS](#school-lunch-management-system---slms)
   - [Goals and Overview](#goals-and-overview)
+  - [Getting Started](#getting-started)
+    - [Install Python](#install-python)
+    - [Install Django](#install-django)
+    - [Clone this Repo](#clone-this-repo)
+    - [Make migrations and run the server](#make-migrations-and-run-the-server)
   - [Navigation and Use](#navigation-and-use)
     - [New User Registration and Log in](#new-user-registration-and-log-in)
     - [User Dashboard](#user-dashboard)
@@ -10,7 +17,6 @@
     - [People](#people)
     - [Snack Dashboard](#snack-dashboard)
     - [Log out](#log-out)
-  - [Configuration:](#configuration)
 
 ## Goals and Overview
 * The elementary school requires their students to choose a lunch type for each day that they are attending:
@@ -25,6 +31,21 @@
   * Create new *snack counts* detailing the distribution.
   * Add new *snack foods* available for distribution.
 * Users may follow other users to be notified of their lunch selections.
+* Users may "like" lunch selections made by other users.
+## Getting Started
+### Install Python
+Open a terminal and type `python`.  If you see something like `Python 3.8.5...`, then Python is installed.  If not, then [download Python](https://www.python.org/downloads/) and install it.
+### Install Django
+Install Django using pip by running the following in the terminal `pip install "Django==3.0.*"`.  Check that it was successful by typing `python` into the terminal prompt, importing Django, and then checking the Django version:
+````
+import django
+django.get_version()
+````
+If you get a response like `'3.0.10'`, you've successfully installed Django.
+### Clone this Repo
+[Clone this repository](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/cloning-a-repository) to a location where you want to house the files.
+### Make migrations and run the server
+From the terminal, change to the `slms` directory where you cloned the repository files.  In the terminal, run `python manage.py migrate` to create the associated tables for the application.  Once complete, run `python manage.py runserver` to start the local server, and navigate in a browser to http://127.0.0.1:8000/ where you should see SLMS running.
 ## Navigation and Use
 The information below provides new users to the SLMS system with direction on how to get started.
 ### New User Registration and Log in
@@ -54,9 +75,11 @@ Users can also select the *change your password* link to change their current ac
 ![Change password](account/static/images/ChangePassword.png)
 
 ### Lunch Selections
-Student users can create a lunch selection for the day by first clicking on *Selections* in the top navigation bar where they'll be presented with the view of recent selections that have been made by SLMS users.  They can then *TODO: Update this action:* click on the *create a new selection* link where they can fill in the details and publish their selection by selecting the *Make Selection* button.
+Student users can create a lunch selection for the day by first clicking on *Selections* in the top navigation bar where they'll be presented with the view of recent selections that have been made by SLMS users.  They can then click on the *create a new selection* link where they can fill in the details and publish their selection by selecting the *Make Selection* button.
 
 ![Make selection](account/static/images/MakeSelection.png)
+
+From the *Selections made* page, a user can click on any of the selections listed to see it's details.  From the detail view, they can click the *Like* button to like the selection.
 
 ### People
 Users may view the listing of SLMS users by selecting the *People* link in the top navigation bar.  They may then click on a user to see their follower count, as well as their recent activity.  They can follow that user by clicking the *Follow* button.
@@ -92,13 +115,11 @@ Clicking the *Edit* link on a snack food allows the user to edit the food's deta
 
 ![Edit Snack Food](account/static/images/EditSnackFood.png)
 
+Clicking the *create a new snack food* link allows the user to create a new snack food item by providing valid inputs and selecting the *Create Food* button.
+
+![Create Snack Food](account/static/images/CreateSnackFood.png)
+
 ### Log out
 Users can log out of SLMS at any time by selecting the *Logout* link in the top right section of the navigation bar.
 
 ![Logout](account/static/images/Logout.png)
-
-## Configuration:
-* Python / Django version
-* Any dependencies
-* Related configuration
-* Deployment instructions

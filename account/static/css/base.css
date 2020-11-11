@@ -199,7 +199,7 @@ a.like, a.follow { float:right; margin-top:-8px; }
 }
 #selection-list img { width:220px; height:220px; }
 #selection-list .info { padding:10px; }
-#selection-list .info a { color:#333; }
+#selection-list .info a { color:#12c064; }
 .selection-likes div {
     float:left;
     width:auto;
