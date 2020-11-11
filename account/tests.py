@@ -117,13 +117,13 @@ class TestPeople(TestCase):
     self.assertRedirects(response, "/account/login/?next=/account/users/")
 
   # TC_2
-  def test_authenticated_non_staff_user_can_access_access_user_list(self):
+  def test_authenticated_non_staff_user_can_access_user_list(self):
     self.client.force_login(user=self.non_staff_user)
     response = self.client.get(reverse("user_list"))
     self.assertEqual(response.status_code, 200)
 
   # TC_3
-  def test_authenticated_staff_user_can_access_access_user_list(self):
+  def test_authenticated_staff_user_can_access_user_list(self):
     self.client.force_login(user=self.staff_user)
     response = self.client.get(reverse("user_list"))
     self.assertEqual(response.status_code, 200)
@@ -131,7 +131,7 @@ class TestPeople(TestCase):
   # User detail access
 
   # TC_4
-  def test_authenticated_non_staff_user_can_access_access_user_detail(self):
+  def test_authenticated_non_staff_user_can_access_user_detail(self):
     self.client.force_login(user=self.non_staff_user)
     response = self.client.get(reverse("user_detail", args=[self.non_staff_user]))
     self.assertEqual(response.status_code, 200)
@@ -155,7 +155,7 @@ class TestAccount(TestCase):
   # Register account
 
   # TC_1
-  def test_new_user_registration_with_valid_inputs(self):
+  def test_new_user_registration_success_with_valid_inputs(self):
     response = self.client.get(reverse("register"))
     self.assertEqual(response.status_code, 200)
     letters = string.ascii_lowercase
@@ -163,7 +163,7 @@ class TestAccount(TestCase):
     self.assertContains(response, '<h1>Welcome')
 
   # TC_2
-  def test_new_user_registration_with_invalid_inputs(self):
+  def test_new_user_registration_failure_with_invalid_inputs(self):
     response = self.client.get(reverse("register"))
     self.assertEqual(response.status_code, 200)
     response = self.client.post('/account/register/', {'username': '', 'first_name': '', 'email': '', 'password': '', 'password2': ''})
